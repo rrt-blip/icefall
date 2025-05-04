@@ -42,8 +42,8 @@ use_invalidated=false
 #     - speech
 
 dl_dir=$PWD/download
-release=cv-corpus-12.0-2022-12-07
-lang=fr
+release=cv-corpus-13.0-2023-08-02
+lang=hu 
 perturb_speed=false
 
 . shared/parse_options.sh || exit 1
