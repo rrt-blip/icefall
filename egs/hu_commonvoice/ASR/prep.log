@@ -1,0 +1,29 @@
+2025-05-05 20:37:18 (prepare.sh:71:main) dl_dir: /Users/rritahajrizi/content/icefall/egs/hu_commonvoice/ASR/download
+2025-05-05 20:37:18 (prepare.sh:178:main) Stage 4: Compute fbank for dev and test subsets of CommonVoice
+2025-05-05 20:37:19,358 INFO [compute_fbank_commonvoice_dev_test.py:106] {'language': 'hu'}
+2025-05-05 20:37:19,362 INFO [compute_fbank_commonvoice_dev_test.py:69] device: cpu
+2025-05-05 20:37:19,362 INFO [compute_fbank_commonvoice_dev_test.py:79] Loading data/hu/fbank/cv-hu_cuts_dev_raw.jsonl.gz
+Traceback (most recent call last):
+  File "/Users/rritahajrizi/content/icefall/egs/hu_commonvoice/ASR/./local/compute_fbank_commonvoice_dev_test.py", line 107, in <module>
+    compute_fbank_commonvoice_dev_test(language=args.language)
+  File "/Users/rritahajrizi/content/icefall/egs/hu_commonvoice/ASR/./local/compute_fbank_commonvoice_dev_test.py", line 80, in compute_fbank_commonvoice_dev_test
+    cut_set = CutSet.from_file(raw_cuts_path)
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/site-packages/lhotse/serialization.py", line 544, in from_file
+    return load_manifest_lazy_or_eager(path, manifest_cls=cls)
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/site-packages/lhotse/serialization.py", line 496, in load_manifest_lazy_or_eager
+    return load_manifest_lazy(path)
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/site-packages/lhotse/serialization.py", line 480, in load_manifest_lazy
+    first = next(raw_data)
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/site-packages/lhotse/serialization.py", line 146, in load_jsonl
+    with open_best(path, "r") as f:
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/site-packages/lhotse/serialization.py", line 48, in open_best
+    return get_current_io_backend().open(path, mode)
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/site-packages/lhotse/serialization.py", line 925, in open
+    return b.open(identifier, mode)
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/site-packages/lhotse/serialization.py", line 762, in open
+    return gzip_open_robust(identifier, mode)
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/site-packages/lhotse/workarounds.py", line 108, in gzip_open_robust
+    binary_file = AltGzipFile(filename, gz_mode, compresslevel)
+  File "/Users/rritahajrizi/miniconda3/envs/k2_virenv/lib/python3.9/gzip.py", line 173, in __init__
+    fileobj = self.myfileobj = builtins.open(filename, mode or 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: 'data/hu/fbank/cv-hu_cuts_dev_raw.jsonl.gz'
