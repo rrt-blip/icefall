@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 
+
+# LibriSpeech 100h Data Preparation Script
+# Modified by Rrita Hajrizi on 15.04.2024
+#
+# Key Modifications:
+# 1. MANUAL DOWNLOAD REQUIRED - Lhotse --subset syntax was unstable
+#    wget https://www.openslr.org/resources/12/train-clean-100.tar.gz
+#    tar -xzf train-clean-100.tar.gz -C $dl_dir
+#
+# 2. Removed auto-download blocks (commented out)
+#    # lhotse download librispeech --full $dl_dir  # Original
+#
+# Stage Descriptions:
+#   0 - Data download (MANUAL)
+#   1 - Manifest generation
+#   2 - Feature extraction
+
+
+
 # fix segmentation fault reported in https://github.com/k2-fsa/icefall/issues/674
 export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 
@@ -54,6 +73,7 @@ stop_stage=5
 #        - librispeech-lexicon.txt
 #        - librispeech-lm-norm.txt.gz
 
+
 dl_dir=$PWD/download
 
 . shared/parse_options.sh || exit 1
@@ -103,6 +123,8 @@ if [ $stage -le 0 ] && [ $stop_stage -ge 0 ]; then
     lhotse download librispeech --full $dl_dir
   fi
 
+
+
   # If you have pre-downloaded it to /path/to/musan,
   # you can create a symlink
   #
@@ -144,22 +166,16 @@ if [ $stage -le 3 ] && [ $stop_stage -ge 3 ]; then
   fi
 
   if [ ! -f data/fbank/librispeech_cuts_train-all-shuf.jsonl.gz ]; then
-    cat <(gunzip -c data/fbank/librispeech_cuts_train-clean-100.jsonl.gz) \
-      <(gunzip -c data/fbank/librispeech_cuts_train-clean-360.jsonl.gz) \
-      <(gunzip -c data/fbank/librispeech_cuts_train-other-500.jsonl.gz) | \
-      shuf | gzip -c > data/fbank/librispeech_cuts_train-all-shuf.jsonl.gz
+    cat <(gunzip -c data/fbank/librispeech_cuts_train-clean-100.jsonl.gz)| \
+      gshuf | gzip -c > data/fbank/librispeech_cuts_train-all-shuf.jsonl.gz
   fi
 
   if [ ! -e data/fbank/.librispeech-validated.done ]; then
     log "Validating data/fbank for LibriSpeech"
     parts=(
       train-clean-100
-      train-clean-360
-      train-other-500
       test-clean
-      test-other
       dev-clean
-      dev-other
     )
     for part in ${parts[@]}; do
       python3 ./local/validate_manifest.py \
@@ -189,8 +205,6 @@ if [ $stage -le 5 ] && [ $stop_stage -ge 5 ]; then
       log "Generate data for BPE training"
       files=$(
         find "$dl_dir/LibriSpeech/train-clean-100" -name "*.trans.txt"
-        find "$dl_dir/LibriSpeech/train-clean-360" -name "*.trans.txt"
-        find "$dl_dir/LibriSpeech/train-other-500" -name "*.trans.txt"
       )
       for f in ${files[@]}; do
         cat $f | cut -d " " -f 2-

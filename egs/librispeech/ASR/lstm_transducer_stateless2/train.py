@@ -63,7 +63,7 @@ import torch.multiprocessing as mp
 import torch.nn as nn
 from asr_datamodule import AsrDataModule
 from decoder import Decoder
-from gigaspeech import GigaSpeech
+# from gigaspeech import GigaSpeech
 from joiner import Joiner
 from lhotse import CutSet, load_manifest
 from lhotse.cut import Cut
@@ -332,7 +332,7 @@ def get_parser():
     parser.add_argument(
         "--giga-prob",
         type=float,
-        default=0.5,
+        default=0,
         help="The probability to select a batch from the GigaSpeech dataset",
     )
 
@@ -485,7 +485,7 @@ def get_transducer_model(
         vocab_size=params.vocab_size,
     )
     return model
-
+    params.giga_prob = 0 
 
 def load_checkpoint_if_available(
     params: AttributeDict,

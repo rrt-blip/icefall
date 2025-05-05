@@ -77,6 +77,19 @@ def get_parser():
         default=42,
         help="The seed for random generators intended for reproducibility",
     )
+    parser.add_argument(
+    "--learning-rate",
+    type=float,
+    default=0.5e-2,
+    help="Initial learning rate"
+    )
+
+    parser.add_argument(
+    "--batch-size",
+    type=int,
+    default=32,
+    help="Batch size"
+    )
 
     return parser
 
@@ -142,7 +155,7 @@ def get_params() -> AttributeDict:
         {
             "exp_dir": Path("tdnn/exp"),
             "lang_dir": Path("data/lang_phone"),
-            "lr": 1e-2,
+            "lr": 0.5e-2,
             "feature_dim": 23,
             "weight_decay": 1e-6,
             "start_epoch": 0,

@@ -15,6 +15,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Original code Copyright (c) k2-fsa/icefall team
+"""
+Modified for LibriSpeech 100h by Rrita Hajrizi on 2025-04-17
+
+Changes:
+1. Reduced dataset_parts to ['train-clean-100', ...] (line 112)
+2. Removed full 960h validation asserts
+
+Original code from k2-fsa/icefall (commit d67a49)
+"""
+
 
 """
 This file computes fbank features of the LibriSpeech dataset.
@@ -89,12 +100,12 @@ def compute_fbank_librispeech(
     if dataset is None:
         dataset_parts = (
             "dev-clean",
-            "dev-other",
+            # "dev-other",
             "test-clean",
-            "test-other",
+            # "test-other",
             "train-clean-100",
-            "train-clean-360",
-            "train-other-500",
+            # "train-clean-360",
+            # "train-other-500",
         )
     else:
         dataset_parts = dataset.split(" ", -1)
@@ -115,6 +126,7 @@ def compute_fbank_librispeech(
         list(manifests.keys()),
         dataset_parts,
     )
+
 
     extractor = Fbank(FbankConfig(num_mel_bins=num_mel_bins))
 
