@@ -342,8 +342,8 @@ if [ $stage -le 9 ] && [ $stop_stage -ge 9 ]; then
           | jq '.supervisions[].text' | sed 's/"//g' > $lang_dir/transcript_words.txt
 
         # Ensure space only appears once
-        sed -i 's/\t/ /g' $lang_dir/transcript_words.txt
-        sed -i 's/[ ][ ]*/ /g' $lang_dir/transcript_words.txt
+        sed -i '' 's/\t/ /g' $lang_dir/transcript_words.txt
+        sed -i '' 's/[ ][ ]*/ /g' $lang_dir/transcript_words.txt
       fi
 
       if [ ! -f $lang_dir/words.txt ]; then
